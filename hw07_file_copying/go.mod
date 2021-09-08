@@ -1,3 +1,3 @@
-module github.com/fixme_my_friend/hw07_file_copying
+module github.com/Gusarov2k/home_works/hw07_file_copying
 
 go 1.16
