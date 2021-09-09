@@ -2,7 +2,6 @@ package hw02unpackstring
 
 import (
 	"errors"
-	"log"
 	"strconv"
 	"strings"
 	"unicode"
@@ -18,7 +17,6 @@ func Unpack(name string) (string, error) {
 	countBackslash := 0
 
 	for _, val := range name {
-
 		if unicode.IsDigit(val) {
 			countDigitsInWord++
 		} else if val == 92 {
@@ -31,15 +29,11 @@ func Unpack(name string) (string, error) {
 	} else if unicode.IsDigit(rune(name[0])) || fullLen == countDigitsInWord {
 		return "", ErrInvalidString
 	}
-	log.Println(countBackslash)
+
 	if countBackslash > 0 {
 		for index, val := range name {
-			// log.Println(len(name) -1)
 			if index+1 <= len(name)-1 && val == 92 && name[index+1] != 92 {
-				countBackslash--
-				//  && index+1 <= len(name) -1
 				if val == 92 && unicode.IsDigit(rune(name[index+1])) {
-
 					first := strings.Split(name, string(val))
 					var b strings.Builder
 
@@ -48,10 +42,7 @@ func Unpack(name string) (string, error) {
 					}
 
 					first[0] = b.String()
-					log.Printf("%v", first[0])
 					*linkName = strings.Join(first, "")
-					log.Printf("%v", *linkName)
-
 				}
 			}
 
