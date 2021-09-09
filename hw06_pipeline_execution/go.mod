@@ -1,4 +1,4 @@
-module github.com/fixme_my_friend/hw06_pipeline_execution
+module github.com/Gusarov2k/home_works/hw06_pipeline_execution
 
 go 1.16
 
