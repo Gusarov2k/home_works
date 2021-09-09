@@ -14,13 +14,10 @@ func Unpack(name string) (string, error) {
 
 	fullLen := len(name)
 	countDigitsInWord := 0
-	countBackslash := 0
 
 	for _, val := range name {
 		if unicode.IsDigit(val) {
 			countDigitsInWord++
-		} else if val == 92 {
-			countBackslash++
 		}
 	}
 
@@ -28,26 +25,6 @@ func Unpack(name string) (string, error) {
 		return "", nil
 	} else if unicode.IsDigit(rune(name[0])) || fullLen == countDigitsInWord {
 		return "", ErrInvalidString
-	}
-
-	if countBackslash > 0 {
-		for index, val := range name {
-			if index+1 <= len(name)-1 && val == 92 && name[index+1] != 92 {
-				if val == 92 && unicode.IsDigit(rune(name[index+1])) {
-					first := strings.Split(name, string(val))
-					var b strings.Builder
-
-					for i := 1; i >= 1; i-- {
-						b.WriteString(first[0])
-					}
-
-					first[0] = b.String()
-					*linkName = strings.Join(first, "")
-				}
-			}
-
-		}
-		return name, nil
 	}
 
 	for index, val := range name {
