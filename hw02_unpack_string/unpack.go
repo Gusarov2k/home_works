@@ -28,11 +28,9 @@ func Unpack(name string) (string, error) {
 	}
 
 	for index, val := range name {
-
 		if unicode.IsDigit(val) && unicode.IsDigit(rune(name[index+1])) {
 			return "", ErrInvalidString
 		} else if unicode.IsDigit(val) {
-
 			valAsInt, _ := strconv.Atoi(string(val))
 			first := strings.Split(name, string(val))
 			lastChar := len(first[0]) - 1
@@ -43,7 +41,6 @@ func Unpack(name string) (string, error) {
 			var b strings.Builder
 
 			for i := 1; i >= 1; i-- {
-
 				if valAsInt == 1 {
 					b.WriteString(first[0][0 : len(first[0])-1])
 				} else {
