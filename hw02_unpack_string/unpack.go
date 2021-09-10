@@ -12,18 +12,9 @@ var ErrInvalidString = errors.New("invalid string")
 func Unpack(name string) (string, error) {
 	linkName := &name
 
-	fullLen := len(name)
-	countDigitsInWord := 0
-
-	for _, val := range name {
-		if unicode.IsDigit(val) {
-			countDigitsInWord++
-		}
-	}
-
 	if name == "" {
 		return "", nil
-	} else if unicode.IsDigit(rune(name[0])) || fullLen == countDigitsInWord {
+	} else if unicode.IsDigit(rune(name[0])) {
 		return "", ErrInvalidString
 	}
 
