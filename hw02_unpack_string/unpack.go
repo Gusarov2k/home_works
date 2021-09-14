@@ -40,9 +40,9 @@ func Unpack(name string) (string, error) {
 			if currentNumber > 1 {
 				b.WriteString(repeatedChar)
 			}
+			b.WriteString(splitedName[1])
 
-			splitedName[0] = b.String()
-			name = strings.Join(splitedName, "")
+			name = b.String()
 		}
 	}
 
