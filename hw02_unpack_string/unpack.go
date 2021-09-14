@@ -28,10 +28,12 @@ func Unpack(name string) (string, error) {
 			return "", ErrInvalidString
 		} else if isDigit(val) {
 			currentNumber, _ := strconv.Atoi(string(val))
-			splitedName := strings.Split(name, string(val))
+			splitedName := strings.SplitN(name, string(val), 2)
+
 			lastChar := len(splitedName[0]) - 1
 
 			repeatedChar := strings.Repeat(string(splitedName[0][lastChar]), currentNumber)
+
 			var b strings.Builder
 
 			b.WriteString(splitedName[0][0 : len(splitedName[0])-1])
