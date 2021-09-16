@@ -6,11 +6,10 @@ import (
 	"strings"
 )
 
-func isDigit(char int32) bool {
+func isDigit(char uint8) bool {
 	if char >= 48 && char <= 57 {
 		return true
 	}
-
 	return false
 }
 
@@ -19,28 +18,24 @@ var ErrInvalidString = errors.New("invalid string")
 func Unpack(name string) (string, error) {
 	if name == "" {
 		return "", nil
-	} else if isDigit(int32(name[0])) {
+	} else if isDigit(name[0]) {
 		return "", ErrInvalidString
 	}
 
-	for index, val := range name {
-		if isDigit(val) && (isDigit(int32(name[index+1])) && index+1 != len(name)) {
+	for i := 0; i < len(name); i++ {
+		if isDigit(name[i]) && isDigit(name[i+1]) {
 			return "", ErrInvalidString
-		} else if isDigit(val) {
-			currentNumber, _ := strconv.Atoi(string(val))
-			splitedName := strings.SplitN(name, string(val), 2)
-
-			lastChar := len(splitedName[0]) - 1
-
-			repeatedChar := strings.Repeat(string(splitedName[0][lastChar]), currentNumber)
+		} else if isDigit(name[i]) {
+			currentNumber, _ := strconv.Atoi(string(name[i]))
+			repeatedChar := strings.Repeat(string(name[i-1]), currentNumber)
 
 			var b strings.Builder
 
-			b.WriteString(splitedName[0][0 : len(splitedName[0])-1])
+			b.WriteString(name[:i-1])
 			if currentNumber > 1 {
 				b.WriteString(repeatedChar)
 			}
-			b.WriteString(splitedName[1])
+			b.WriteString(name[i+1:])
 
 			name = b.String()
 		}
