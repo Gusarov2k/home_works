@@ -22,24 +22,26 @@ func Unpack(name string) (string, error) {
 		return "", ErrInvalidString
 	}
 
+	var b strings.Builder
+
 	for i := 0; i < len(name); i++ {
 		if isDigit(name[i]) && isDigit(name[i+1]) {
 			return "", ErrInvalidString
 		} else if isDigit(name[i]) {
 			currentNumber, _ := strconv.Atoi(string(name[i]))
-			repeatedChar := strings.Repeat(string(name[i-1]), currentNumber)
 
-			var b strings.Builder
-
-			b.WriteString(name[:i-1])
 			if currentNumber > 1 {
+				repeatedChar := strings.Repeat(string(name[i-1]), currentNumber-1)
 				b.WriteString(repeatedChar)
+			} else if currentNumber == 0 {
+				cutString := b.String()[:i-1]
+				b.Reset()
+				b.WriteString(cutString)
 			}
-			b.WriteString(name[i+1:])
-
-			name = b.String()
+		} else {
+			b.WriteString(string(name[i]))
 		}
 	}
 
-	return name, nil
+	return b.String(), nil
 }
